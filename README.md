@@ -119,4 +119,4 @@ This project uses data from the MoMA collection dataset. MoMA requests that you 
 
 ## Live Demo
 
-👉 [View on Streamlit Cloud](https://your-app-url.streamlit.app)
+👉 [View on Streamlit Cloud](https://moma-collection-explorer-jgskyfvzd6enbjzrcj86je.streamlit.app)
