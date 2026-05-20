@@ -34,10 +34,10 @@ La app está organizada como una visita al museo, con cuatro salas para explorar
 
 | Sala | Descripción |
 |---|---|
-| 🏛️ Entrance Hall | Cifras clave, primera y última adquisición |
-| 🌍 Hall of Origins | Mapa mundial de artistas por país de origen |
-| 🖼️ Techniques Hall | Treemap de técnicas artísticas en la colección |
-| 🔍 The Collection | Busca y filtra obras por artista, década o año |
+| 🏛️ Vestíbulo. | Cifras clave, primera y última adquisición |
+| 🌍 Orígenes. | Mapa mundial de artistas por país de origen |
+| 🖼️ Técnicas. | Treemap de técnicas artísticas en la colección |
+| 🔍 La Colección | Busca y filtra obras por artista, década o año |
 
 ---
 

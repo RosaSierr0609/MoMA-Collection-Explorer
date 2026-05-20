@@ -18,7 +18,7 @@ st.sidebar.markdown("---")
 
 pagina = st.sidebar.radio(
     "",
-    ["🏛️ Sala 1: Vestíbulo.", "🌍 Sala 2: Orígenes.", "🖼️ Sala 3: Técnicas.", "🔍 Sala 4: La colección."]
+    ["🏛️ Sala 1: Vestíbulo.", "🌍 Sala 2: Orígenes.", "🖼️ Sala 3: Técnicas.", "🔍 Sala 4: La Colección."]
 )
 
 if pagina == "🏛️ Sala 1: Vestíbulo.":
@@ -239,9 +239,9 @@ if pagina == "🖼️ Sala 3: Técnicas.":
     fig.update_layout(height=600)
     st.plotly_chart(fig, use_container_width=True)
 
-if pagina == "🔍 Sala 4: La colección.":
+if pagina == "🔍 Sala 4: La Colección.":
     
-    st.title("🔍 Sala 4: La colección.")
+    st.title("🔍 Sala 4: La Colección.")
     st.markdown('Busca y filtra la colección por artista y década de adquisión.')
 
     col_f1, col_f2, col_f3 = st.columns(3)
