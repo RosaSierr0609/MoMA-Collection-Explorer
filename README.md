@@ -1,122 +1,123 @@
 # MoMA Collection Explorer
 
-An interactive data dashboard that explores the permanent collection of the **Museum of Modern Art (MoMA)** in New York — artists, origins, techniques, and the decades that shaped one of the world's most iconic museums.
+Un dashboard interactivo que explora la colección permanente del **Museum of Modern Art (MoMA)** de Nueva York — artistas, orígenes, técnicas y las décadas que dieron forma a uno de los museos más icónicos del mundo.
 
 ---
 
-## About the Project
+## Sobre el proyecto
 
-This project was built as the final project for the Business Intelligence module of a Data Analytics bootcamp. The goal was to connect a real-world dataset to a cloud database, clean and transform the data, perform an exploratory data analysis, and build an interactive Streamlit dashboard.
-
----
-
-## Data Source
-
-The datasets used in this project are published by the **Museum of Modern Art (MoMA)** and are available at the [MoMA GitHub repository](https://github.com/MuseumofModernArt/collection).
-
-- **Artworks dataset:** 160,435 records with title, artist, date, medium, dimensions and acquisition date
-- **Artists dataset:** 15,905 records with name, nationality, gender, birth and death year
-
-Both datasets are licensed under [CC0 1.0 Universal Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/).
-
-> This project uses the MoMA collection data "as is" for research and educational purposes.
-> Much of the information is not complete and has not been curatorially approved by MoMA.
-> This project is not endorsed by or affiliated with MoMA.
-> Images are not included in the dataset. To license images please contact
-> [Art Resource](http://www.artres.com/) (North America) or
-> [Scala Archives](http://www.scalarchives.com/) (outside North America).
+El objetivo fue conectar un dataset real a una base de datos en la nube, limpiar y transformar los datos, realizar un análisis exploratorio y construir un dashboard interactivo con Streamlit.
 
 ---
 
-## Dashboard Structure
+## Fuente de datos
 
-The app is organized as a museum visit, with four rooms to explore:
+Los datasets utilizados en este proyecto están publicados por el **Museum of Modern Art (MoMA)** y están disponibles en el [repositorio de GitHub del MoMA](https://github.com/MuseumofModernArt/collection).
 
-| Room | Description |
+- **Dataset de obras:** 160.435 registros con título, artista, fecha, técnica, dimensiones y fecha de adquisición
+- **Dataset de artistas:** 15.905 registros con nombre, nacionalidad, género, año de nacimiento y año de fallecimiento
+
+Ambos datasets están bajo licencia [CC0 1.0 Universal de Dominio Público](https://creativecommons.org/publicdomain/zero/1.0/).
+
+> Este proyecto utiliza los datos de la colección del MoMA "tal como están" con fines de investigación y educación.
+> Gran parte de la información no está completa y no ha sido aprobada por los conservadores del MoMA.
+> Este proyecto no está respaldado ni afiliado al MoMA.
+> Las imágenes no están incluidas en el dataset. Para obtener licencias de imágenes, contacta con
+> [Art Resource](http://www.artres.com/) (Norteamérica) o
+> [Scala Archives](http://www.scalarchives.com/) (fuera de Norteamérica).
+
+---
+
+## Estructura del dashboard
+
+La app está organizada como una visita al museo, con cuatro salas para explorar:
+
+| Sala | Descripción |
 |---|---|
-| 🏛️ Entrance Hall | Key figures, first and last acquisitions |
-| 🌍 Hall of Origins | World map of artists by country of origin |
-| 🖼️ Techniques Hall | Treemap of artistic techniques in the collection |
-| 🔍 The Collection | Search and filter artworks by artist, decade or year |
+| 🏛️ Entrance Hall | Cifras clave, primera y última adquisición |
+| 🌍 Hall of Origins | Mapa mundial de artistas por país de origen |
+| 🖼️ Techniques Hall | Treemap de técnicas artísticas en la colección |
+| 🔍 The Collection | Busca y filtra obras por artista, década o año |
 
 ---
 
-## Tech Stack
+## Tecnologías utilizadas
 
-- **Python** — data processing and analysis
-- **Pandas** — data cleaning and transformation
-- **TiDB Cloud** — cloud MySQL-compatible database
-- **Plotly Express** — interactive visualizations
-- **Streamlit** — web application framework
-
----
-
-## Data Pipeline
-
-1. **SQL** — Tables created in TiDB Cloud (`Artists` as parent, `Artworks` as child with Foreign Key)
-2. **Data upload** — CSVs cleaned and uploaded via `mysql-connector-python` in batches of 1000 rows
-3. **Preprocessing** — Null values handled, data types corrected, dates parsed with `pd.to_datetime`
-4. **Feature engineering** — New columns created: `MediumCategory` (technique classifier), `CreditLineCategory` (acquisition type), `Year`, `YearAcquired`, `Decade`, `Country`
-5. **EDA** — Univariate and bivariate analysis with Plotly, covering gender, nationality, techniques and temporal trends
-6. **Export** — Final analytical DataFrame saved as `.pkl` for fast loading in Streamlit
+- **Python** — procesamiento y análisis de datos
+- **Pandas** — limpieza y transformación de datos
+- **TiDB Cloud** — base de datos en la nube compatible con MySQL
+- **Plotly Express** — visualizaciones interactivas
+- **Streamlit** — framework de aplicaciones web
 
 ---
 
-## Project Structure
+## Pipeline de datos
+
+1. **SQL** — Tablas creadas en TiDB Cloud (`Artists` como tabla padre, `Artworks` como tabla hija con Foreign Key)
+2. **Carga de datos** — CSVs limpiados y subidos mediante `mysql-connector-python` en lotes de 1.000 filas
+3. **Preprocesamiento** — Valores nulos tratados, tipos de datos corregidos, fechas parseadas con `pd.to_datetime`
+4. **Ingeniería de características** — Nuevas columnas creadas: `MediumCategory` (clasificador de técnicas), `CreditLineCategory` (tipo de adquisición), `Year`, `YearAcquired`, `Decade`, `Country`
+5. **EDA** — Análisis univariante y bivariante con Plotly sobre género, nacionalidad, técnicas y tendencias temporales
+6. **Exportación** — DataFrame analítico final guardado como `.pkl` para carga rápida en Streamlit
+
+---
+
+## Estructura del proyecto
 
 ```
-├── app.py                    # Streamlit application
-├── Dataset_MoMa.pkl          # Analytical DataFrame (local cache)
-├── MoMa_Proyect.ipynb        # Full project notebook:
-│   ├── SQL queries            #   - Table creation and data upload to TiDB Cloud
-│   ├── Data preprocessing     #   - Cleaning, null handling, type conversion
-│   ├── Feature engineering    #   - New columns: MediumCategory, CreditLineCategory, Year, Decade, Country
-│   └── EDA                    #   - Univariate, bivariate analysis and key findings
-├── credenciales.py            # Database credentials (not included in repo)
+├── app.py                    # Aplicación Streamlit
+├── Dataset_MoMa.pkl          # DataFrame analítico (caché local)
+├── MoMa_Proyect.ipynb        # Notebook completo del proyecto:
+│   ├── SQL queries            #   - Creación de tablas y carga en TiDB Cloud
+│   ├── Preprocesamiento       #   - Limpieza, tratamiento de nulos, conversión de tipos
+│   ├── Ingeniería de features #   - Nuevas columnas: MediumCategory, CreditLineCategory, Year, Decade, Country
+│   └── EDA                    #   - Análisis univariante, bivariante y conclusiones
+├── credenciales.py            # Credenciales de la base de datos (no incluido en el repo)
+├── logo_MoMA.png              # Logo del MoMA
 └── README.md
 ```
 
 ---
 
-## Key Findings
+## Conclusiones principales
 
-1. **Ludwig Mies van der Rohe dominates the collection.** The architect is the most represented artist in the dataset, significantly influencing the temporal distribution of acquisitions and the weight of certain techniques.
+1. **Ludwig Mies van der Rohe domina la colección.** El arquitecto es el artista más representado en el dataset, con una influencia significativa en la distribución temporal de adquisiciones y en el peso de ciertas técnicas.
 
-2. **The collection reflects a strong gender imbalance.** Female artists are a minority, with Louise Bourgeois as the most represented. A positive trend is observed from the 1990s onwards.
+2. **La colección refleja un fuerte desequilibrio de género.** Las artistas femeninas son una minoría, siendo Louise Bourgeois la más representada. Se observa una tendencia positiva a partir de los años 90.
 
-3. **Donations are the primary acquisition method.** Over 60% of works entered the collection as gifts, reflecting a deeply rooted culture of patronage.
+3. **Las donaciones son el principal método de adquisición.** Más del 60% de las obras entraron en la colección como regalos, lo que refleja una cultura de mecenazgo muy arraigada.
 
 ---
 
-## How to Run Locally
+## Cómo ejecutarlo en local
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/moma-collection-explorer.git
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/moma-collection-explorer.git
 cd moma-collection-explorer
 
-# Create and activate virtual environment
+# Crear y activar el entorno virtual
 python -m venv .venv
 source .venv/bin/activate  # Mac/Linux
 .venv\Scripts\activate     # Windows
 
-# Install dependencies
+# Instalar dependencias
 pip install streamlit pandas plotly mysql-connector-python
 
-# Run the app
+# Ejecutar la app
 streamlit run app.py
 ```
 
-> **Note:** The `credenciales.py` file is not included in the repository. The app loads data from the local `.pkl` file and does not require a database connection to run.
+> **Nota:** El archivo `credenciales.py` no está incluido en el repositorio. La app carga los datos desde el archivo `.pkl` local y no requiere conexión a la base de datos para funcionar.
 
 ---
 
-## Attribution
+## Atribución
 
-This project uses data from the MoMA collection dataset. MoMA requests that you actively acknowledge and give attribution to MoMA wherever possible. If you use the dataset for a publication, please cite it using the digital object identifier provided in the [MoMA GitHub repository](https://github.com/MuseumofModernArt/collection).
+Este proyecto utiliza datos del dataset de la colección del MoMA. El MoMA solicita que se reconozca y atribuya activamente su autoría siempre que sea posible. Si utilizas el dataset para una publicación, cítalo usando el identificador de objeto digital disponible en el [repositorio de GitHub del MoMA](https://github.com/MuseumofModernArt/collection).
 
 ---
 
-## Live Demo
+## Demo en vivo
 
-👉 [View on Streamlit Cloud](https://moma-collection-explorer-jgskyfvzd6enbjzrcj86je.streamlit.app)
+👉 [Ver en Streamlit Cloud](https://moma-collection-explorer-jgskyfvzd6enbjzrcj86je.streamlit.app)
