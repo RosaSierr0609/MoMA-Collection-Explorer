@@ -13,26 +13,26 @@ df = cargar_datos()
 st.sidebar.markdown("# MoMA")
 st.sidebar.markdown("*Collection Explorer*")
 st.sidebar.markdown("---")
-st.sidebar.markdown("**Choose a room to explore the collection.**")
+st.sidebar.markdown("**Elige una sala para explorar la colección.**")
 st.sidebar.markdown("---")
 
 pagina = st.sidebar.radio(
     "",
-    ["🏛️ Entrance Hall", "🌍 Hall of Origins", "🖼️ Techniques Hall", "🔍 The Collection"]
+    ["🏛️ Sala 1: Vestíbulo.", "🌍 Sala 2: Orígenes.", "🖼️ Sala 3: Técnicas.", "🔍 Sala 4: La colección."]
 )
 
-if pagina == "🏛️ Entrance Hall":
+if pagina == "🏛️ Sala 1: Vestíbulo.":
       
-    st.title("🏛️ Entrance Hall")
-    st.markdown('An overview of the MoMA permanent collection: key figures, first and last acquisitions')
+    st.title("🏛️ Sala 1: Vestíbulo.")
+    st.markdown('Visión general de la colección de MoMA: Cifras claves y primera y última adquisición.')
 
     col1, col3 = st.columns(2) 
     col2, col4 = st.columns(2)
 
-    col1.metric('Artworks on View', df['Title'].nunique())
-    col2.metric("Artists", df["Artist"].nunique())
-    col3.metric('Mediums', df['Medium'].nunique())
-    col4.metric('Nationality', df['Nationality'].nunique())
+    col1.metric('Obras en exposición', df['Title'].nunique())
+    col2.metric("Artistas", df["Artist"].nunique())
+    col3.metric('Técnicas', df['Medium'].nunique())
+    col4.metric('Nacionalidad', df['Nationality'].nunique())
 
     primera_obra = df.loc[df['DateAcquired'].idxmin(), 'Title']
     primera_fecha = df['DateAcquired'].min().strftime('%B %d, %Y')
@@ -43,14 +43,14 @@ if pagina == "🏛️ Entrance Hall":
     col_primera, col_ultima = st.columns(2)
       
     with col_primera:
-        st.metric(label="First Acquisition", value=primera_obra)
+        st.metric(label="Primera adquisión.", value=primera_obra)
         st.caption(f"*{primera_fecha}*")
     with col_ultima:
-        st.metric(label="Last Acquisition", value=ultima_obra)
+        st.metric(label="Última adquisión.", value=ultima_obra)
         st.caption(f"*{ultima_fecha}*")
 
 df_filtrado = df.copy()
-if pagina == "🌍 Hall of Origins":
+if pagina == "🌍 Sala 2: Orígenes.":
     nacionalidad_a_pais = {
     'American': 'United States',
     'French': 'France',
@@ -175,15 +175,15 @@ if pagina == "🌍 Hall of Origins":
     'Burkinabé': 'Burkina Faso',
 } 
     
-    st.title("🌍 Hall of Origins")
-    st.markdown('An overview of the MoMA permanent collection: key figures, first and last acquisitions')
+    st.title("🌍 Sala 2: Orígenes.")
+    st.markdown('Un mapa mundial de los artistas del MoMA: busca un artista y descubre su país de origen.')
 
     df_filtrado['Country'] = df_filtrado['Nationality'].map(nacionalidad_a_pais)
     col_filtro, col_info = st.columns(2)
 
     with col_filtro:
         artista = st.selectbox(
-            "Search an artist",
+            "Busca un artista",
             options=['All Artists'] + sorted(df_filtrado['Artist'].unique().tolist())
         )
 
@@ -200,7 +200,7 @@ if pagina == "🌍 Hall of Origins":
         datos_mapa = df_filtrado[df_filtrado['Artist'] == artista].dropna(subset=['Country']).groupby('Country')['Artist'].count().reset_index()
 
     if datos_mapa.empty:
-        st.warning("No location data available for this artist.")
+        st.warning("Localización no encontrada.")
     else:
         fig = px.choropleth(
             datos_mapa,
@@ -213,10 +213,10 @@ if pagina == "🌍 Hall of Origins":
         fig.update_layout(height=600)
         st.plotly_chart(fig, use_container_width=True)
 
-if pagina == "🖼️ Techniques Hall":
+if pagina == "🖼️ Sala 3: Técnicas.":
 
-    st.title("🖼️ Techniques Hall")
-    st.markdown('A visual breakdown of the artistic techniques represented across the collection.')
+    st.title("🖼️ Sala 3: Técnicas.")
+    st.markdown('Visualización de las técnicas artísticas presentes en la colección.')
 
     medium_info = df.groupby('MediumCategory').agg(
         Artworks=('Title', 'count'),
@@ -239,28 +239,27 @@ if pagina == "🖼️ Techniques Hall":
     fig.update_layout(height=600)
     st.plotly_chart(fig, use_container_width=True)
 
-if pagina == "🔍 The Collection":
+if pagina == "🔍 Sala 4: La colección.":
     
-    st.title("🔍 The Collection")
-    st.markdown('Search and filter the collection by artist, decade or year of acquisition.')
-    
+    st.title("🔍 Sala 4: La colección.")
+    st.markdown('Busca y filtra la colección por artista y década de adquisión.')
 
     col_f1, col_f2, col_f3 = st.columns(3)
     with col_f1:
         artista = st.selectbox(
-            "Artist",
+            "Artista.",
             options=['All'] + sorted(df['Artist'].unique().tolist())
         )
     
     with col_f2:
         decade = st.selectbox(
-            "Decade",
+            "Década.",
             options=['All'] + sorted(df['Decade'].dropna().unique().tolist())
         )
     
     with col_f3:
         year = st.selectbox(
-            "Year",
+            "Año.",
             options=['All'] + sorted(df['YearAcquired'].dropna().unique().tolist())
         )
     
