@@ -191,8 +191,8 @@ if pagina == "🌍 Sala 2: Orígenes.":
         if artista != 'All Artists':
             pais = df_filtrado[df_filtrado['Artist'] == artista]['Country'].values[0]
             nacionalidad = df_filtrado[df_filtrado['Artist'] == artista]['Nationality'].values[0] 
-            st.metric(label="Origin", value=pais)
-            st.caption(f"Nationality: {nacionalidad}")
+            st.metric(label="Origen", value=pais)
+            st.caption(f"Nacionalidad: {nacionalidad}")
     
     if artista == 'All Artists':
         datos_mapa = df_filtrado.dropna(subset=['Country']).groupby('Country')['Artist'].nunique().reset_index()
@@ -207,7 +207,7 @@ if pagina == "🌍 Sala 2: Orígenes.":
             locations='Country',
             locationmode='country names',
             color='Artist',
-            title='Artists by Country' if artista == 'All Artists' else f"{artista}'s Origin",
+            title='Artista por pais' if artista == 'All Artists' else f"{artista}'s Origin",
             color_continuous_scale=['#F5E6D3', '#C1440E']
         )
         fig.update_layout(height=600)
@@ -228,7 +228,7 @@ if pagina == "🖼️ Sala 3: Técnicas.":
         medium_info,
         path=['MediumCategory'],
         values='Artworks',
-        title='Artworks by Technique',
+        title='Técnicas por artista',
         color='Artworks',
         color_continuous_scale=['#F5E6D3', '#C1440E'],
         hover_data={

@@ -73,7 +73,6 @@ La app está organizada como una visita al museo, con cuatro salas para explorar
 │   ├── Ingeniería de features #   - Nuevas columnas: MediumCategory, CreditLineCategory, Year, Decade, Country
 │   └── EDA                    #   - Análisis univariante, bivariante y conclusiones
 ├── credenciales.py            # Credenciales de la base de datos (no incluido en el repo)
-├── logo_MoMA.png              # Logo del MoMA
 └── README.md
 ```
 
